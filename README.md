@@ -1,2 +1,1 @@
-# hyperledger-fabric-comoser-explorer-starter
-Simple starter repo and deployment scripts combining Hyperledger Fabric/Composer/Explorer
+# A starter repo for a Hyperledger Composer Business Network running on a Hyperledger Fabric Blockchain.
