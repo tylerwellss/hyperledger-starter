@@ -24,9 +24,17 @@ ARCH=$ARCH docker-compose -f docker-compose.yml up -d
 
 echo "$(tput setaf 6)$(tput bold)Sleep 5 seconds while startup completes $(tput sgr0)" && sleep 5
 
+echo "$(tput setaf 6)$(tput bold)Create PeerAdmin card $(tput sgr0)" && sleep 2
+cd ../../../..
+cd ./fabric/fabric-scripts/hlfv11
+./createPeerAdminCard.sh
+echo "$(tput setaf 6)$(tput bold)PeerAdmin card created$(tput sgr0)" && sleep 2
+
 echo "$(tput setaf 6)$(tput bold)Creating Channel $(tput sgr0)" && sleep 2
 docker exec peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx
 echo "$(tput setaf 6)$(tput bold)Channel Created $(tput sgr0)" && sleep 2
+
+
 
 echo "$(tput setaf 6)$(tput bold)Joining Peer to Channel $(tput sgr0)" && sleep 2
 docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp" peer0.org1.example.com peer channel join -b composerchannel.block
@@ -37,7 +45,7 @@ echo "$(tput setaf 6)$(tput bold)Fabric Started! Deploying Composer network ... 
 echo "$(tput setaf 6)$(tput bold)Creating business network archive file $(tput sgr0)"
 echo "$(tput setaf 4)$(tput bold)************************************************$(tput sgr0)" && sleep 2
 
-cd ../../../../composer && composer archive create -t dir -n .
+cd ../../../composer && composer archive create -t dir -n .
 echo "$(tput setaf 6)$(tput bold)Business network archive file created $(tput sgr0)" && sleep 2
 
 echo "$(tput setaf 6)$(tput bold)Install Composer network to Fabric $(tput sgr0)" && sleep 2
