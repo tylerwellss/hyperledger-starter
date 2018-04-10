@@ -43,3 +43,9 @@ This assumes you've installed prerequisites for both Fabric and Composer.
 
 * Install PostgresQL 9.5 or greater
   * [Click here to download](https://www.postgresql.org/download/)
+
+## Deploy
+
+Once you've allowed all of the prerequisites, you should be good to go. Run `./deploy.sh` to deploy a Fabric network and a Composer business network on top of that.
+
+You'll be able to access Composer's REST API at `localhost:3000`.
