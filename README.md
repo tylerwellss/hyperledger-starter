@@ -44,8 +44,30 @@ This assumes you've installed prerequisites for both Fabric and Composer.
 * Install PostgresQL 9.5 or greater
   * [Click here to download](https://www.postgresql.org/download/)
 
-## Deploy
+## Deploy Fabric + Composer
 
 Once you've allowed all of the prerequisites, you should be good to go. Run `./deploy.sh` to deploy a Fabric network and a Composer business network on top of that.
 
 You'll be able to access Composer's REST API at `localhost:3000`.
+
+## Deploy Exporer
+
+To explore blocks, you need to deploy Hyperledger Explorer.
+
+### Setup Postgres
+ * Navigate to `exporer/app`.
+ * `sudo -u postgres psql`
+ * Run create database script: `\i app/db/explorerpg.sql`
+ 
+### Build Hyperledger Explorer
+* Navigate to `explorer/app/test` and `npm install` and `npm run test`
+* Navigate to `explorer` and `npm install`
+* Navigate to `explorer/client` and `npm install` and `npm test -- -u --coverage` and `npm run build`
+
+### Run Hyperledger Explorer
+
+From a new terminal
+* Navigate to `explorer`
+* Run `./start.sh`
+
+Boom. Hyperledger Explorer should now be accessible at `http://localhost:8080`.
