@@ -54,7 +54,9 @@ You'll be able to access Composer's REST API at `localhost:3000`.
 
 To explore blocks, you need to deploy Hyperledger Explorer.
 
-### Setup Postgres
+Docs coming soon ... (updated 4/19/2018)
+
+<!-- ### Setup Postgres
  * Navigate to `exporer/app`.
  * `sudo -u postgres psql`
  * Run create database script: `\i app/db/explorerpg.sql`
@@ -70,4 +72,4 @@ From a new terminal
 * Navigate to `explorer`
 * Run `./start.sh`
 
-Boom. Hyperledger Explorer should now be accessible at `http://localhost:8080`.
+Boom. Hyperledger Explorer should now be accessible at `http://localhost:8080`. -->
