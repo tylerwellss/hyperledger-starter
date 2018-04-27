@@ -1,6 +1,3 @@
-[![npm](https://img.shields.io/npm/v/npm.svg)](https://github.com/wellstyler/hyperledger-starter)
-[![node](https://img.shields.io/node/v/passport.svg)](https://github.com/wellstyler/hyperledger-starter)
-
 # A starter project to get started with a combination of Hyperledger Fabric 1.1, Hyperledger Composer, and Hyperledger Explorer
 
 This README will assume we are running things locally on macOS. For Windows and Ubuntu setups, be sure to check the official documentation, as those include extra or different steps.
