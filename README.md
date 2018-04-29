@@ -1,6 +1,6 @@
-# A starter project to get started with a combination of Hyperledger Fabric 1.1, Hyperledger Composer, and Hyperledger Explorer
+# Hyperledger Starter (Explorer/Fabric/Composer)
 
-This README will assume we are running things locally on macOS. For Windows and Ubuntu setups, be sure to check the official documentation, as those include extra or different steps.
+Welcome to a repo to get started with a combination of Hyperledger Fabric 1.1, Hyperledger Composer, and Hyperledger Explorer. This README will assume we are running things locally on macOS. For Windows and Ubuntu setups, be sure to check the official documentation, as those include extra or different steps.
 
 ## Fabric Prerequisites
 
@@ -37,12 +37,10 @@ This assumes you've installed the Fabric prerequisites.
 
 ## Hyperledger Blockchain Explorer Prerequisites
 
-[Official Blockchain Explorer setup docs](https://github.com/hyperledger/blockchain-explorer)
-
 This assumes you've installed prerequisites for both Fabric and Composer.
 
-* Install PostgresQL 9.5 or greater
-  * [Click here to download](https://www.postgresql.org/download/)
+* Install MySQL.
+  * [Click here to download](https://www.mysql.com/)
 
 ## Deploy Fabric + Composer
 
@@ -54,22 +52,11 @@ You'll be able to access Composer's REST API at `localhost:3000`.
 
 To explore blocks, you need to deploy Hyperledger Explorer.
 
-Docs coming soon ... (updated 4/19/2018)
-
-<!-- ### Setup Postgres
- * Navigate to `exporer/app`.
- * `sudo -u postgres psql`
- * Run create database script: `\i app/db/explorerpg.sql`
- 
-### Build Hyperledger Explorer
-* Navigate to `explorer/app/test` and `npm install` and `npm run test`
-* Navigate to `explorer` and `npm install`
-* Navigate to `explorer/client` and `npm install` and `npm test -- -u --coverage` and `npm run build`
-
-### Run Hyperledger Explorer
-
-From a new terminal
-* Navigate to `explorer`
+* Ensure explorer/config.json is using your MySQL password and username.
+* Run the db/fabricexplorer.sql script (or copy/paste it into your MySQL shell)
 * Run `./start.sh`
+* To restart or clear the data, stop Explorer's Node process and repeat the above steps.
 
-Boom. Hyperledger Explorer should now be accessible at `http://localhost:8080`. -->
+You should now be able to access Hyperledger Fabric Explorer at `localhost:8080`. Want to make sure it's working? Make a POST request to your Composer REST API and create a participant or asset. Explorer should update in real time.
+
+Happy Hyperledgering!
