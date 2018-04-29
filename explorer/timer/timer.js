@@ -15,9 +15,7 @@
  */
 
 var Metrics=require('../metrics/metrics.js')
-var blockListener=require('../listener/blocklistener.js').blockListener();
-var blockScanEvent=require('../service/bcexplorerservice.js').blockScanEvent;
-
+var blockListener=require('../listener/blocklistener.js').blockListener()
 
 var blockPerMinMeter=Metrics.blockMetrics
 var txnPerSecMeter=Metrics.txnPerSecMeter
@@ -26,7 +24,6 @@ var txnPerMinMeter=Metrics.txMetrics
 var stomp=require('../socket/websocketserver.js').stomp()
 
 var statusMertics=require('../service/metricservice.js')
-var bcexplorerservice = require('../service/bcexplorerservice');
 
 var ledgerMgr=require('../utils/ledgerMgr.js')
 
@@ -59,20 +56,9 @@ function start() {
 
     //push status
     setInterval(function () {
-        let sectionName=ledgerMgr.currSection();
-        if (sectionName=='channel'){
-            statusMertics.getStatus(ledgerMgr.getCurrChannel(),function (status) {
-                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
-            })
-        } else if(sectionName=='org'){
-            let status=bcexplorerservice.getOrgStatus().then(status=>{
-                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
-            });
-        } else if(sectionName=='peer'){
-            bcexplorerservice.getPeerStatus().then(status=>{
-                stomp.send('/topic/metrics/status',{},JSON.stringify(status))
-            });
-        }
+        statusMertics.getStatus(ledgerMgr.getCurrChannel(),function (status) {
+            stomp.send('/topic/metrics/status',{},JSON.stringify(status))
+        })
     },1000)
 
     //push chaincode per tx
@@ -83,9 +69,8 @@ function start() {
     },1000)*/
 
     //同步区块
-    // blockScanEvent.emit('syncChaincodes', ledgerMgr.getCurrChannel())
-    // blockScanEvent.emit('syncBlock', ledgerMgr.getCurrChannel())
-    blockScanEvent.emit('syncBlockNow', 'org1')
+    blockListener.emit('syncChaincodes', ledgerMgr.getCurrChannel())
+    blockListener.emit('syncBlock', ledgerMgr.getCurrChannel())
 
 }
 

@@ -1,3 +1,19 @@
+/*
+ Navicat MySQL Data Transfer
+
+ Source Server         : 172.16.10.162
+ Source Server Type    : MySQL
+ Source Server Version : 50635
+ Source Host           : 172.16.10.162
+ Source Database       : fabricexplorer
+
+ Target Server Type    : MySQL
+ Target Server Version : 50635
+ File Encoding         : utf-8
+
+ Date: 07/07/2017 10:14:31 AM
+*/
+
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -7,30 +23,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `blocks`;
 CREATE TABLE `blocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelname` varchar(32) DEFAULT NULL,
   `blocknum` int(11) DEFAULT NULL,
   `datahash` varchar(256) DEFAULT NULL,
-  `perhash` varchar(256) DEFAULT NULL,
+  `prehash` varchar(256) DEFAULT NULL,
+  `channelname` varchar(128) DEFAULT NULL,
   `txcount` int(11) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='block';
-
--- ----------------------------
---  Table structure for `ca`
--- ----------------------------
-DROP TABLE IF EXISTS `ca`;
-CREATE TABLE `ca` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `org_name` varchar(64) DEFAULT NULL,
-  `ca_name` varchar(128) DEFAULT NULL,
-  `ca_request` varchar(128) DEFAULT NULL,
-  `ca_config_path` varchar(128) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='ca';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='blocks';
 
 -- ----------------------------
 --  Table structure for `chaincodes`
@@ -38,19 +37,13 @@ CREATE TABLE `ca` (
 DROP TABLE IF EXISTS `chaincodes`;
 CREATE TABLE `chaincodes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `peer_name` varchar(32) DEFAULT NULL,
-  `channelname` varchar(128) DEFAULT NULL,
-  `name` varchar(256) DEFAULT NULL,
-  `version` varchar(256) DEFAULT NULL,
-  `path` varchar(256) DEFAULT NULL,
-  `escc` varchar(32) DEFAULT NULL,
-  `vscc` varchar(32) DEFAULT NULL,
-  `txcount` int(11) DEFAULT '0' ,
-  `ccstatus` varchar(32) DEFAULT NULL COMMENT ,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
+  `name` varchar(255) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `channelname` varchar(255) DEFAULT NULL,
+  `txcount` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='chaincode';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `channel`
@@ -58,93 +51,11 @@ CREATE TABLE `chaincodes` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelname` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
   `blocks` int(11) DEFAULT NULL,
-  `countblocks` int(11) DEFAULT '1',
   `trans` int(11) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='channel';
-
--- ----------------------------
---  Table structure for `keyset`
--- ----------------------------
-DROP TABLE IF EXISTS `keyset`;
-CREATE TABLE `keyset` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelname` varchar(128) DEFAULT NULL,
-  `blocknum` int(11) DEFAULT NULL,
-  `blockhash` varchar(128) DEFAULT NULL,
-  `transactionhash` varchar(255) DEFAULT NULL,
-  `keyname` varchar(128) DEFAULT NULL,
-  `isdelete` int(11) DEFAULT NULL,
-  `valuess` varchar(128) DEFAULT NULL,
-  `chaincode` varchar(64) DEFAULT NULL,
-  `trandtstr` varchar(128) DEFAULT NULL,
-  `transnums` int(11) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset';
-
--- ----------------------------
---  Table structure for `keyset_history`
--- ----------------------------
-DROP TABLE IF EXISTS `keyset_history`;
-CREATE TABLE `keyset_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelname` varchar(128) DEFAULT NULL,
-  `blocknum` int(11) DEFAULT NULL,
-  `blockhash` varchar(128) DEFAULT NULL,
-  `transactionhash` varchar(255) DEFAULT NULL,
-  `keyname` varchar(128) DEFAULT NULL,
-  `valuess` varchar(128) DEFAULT NULL,
-  `trandtstr` varchar(64) DEFAULT NULL,
-  `chaincode` varchar(64) DEFAULT NULL,
-  `remark` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='keyset_history';
-
--- ----------------------------
---  Table structure for `orderer`
--- ----------------------------
-DROP TABLE IF EXISTS `orderer`;
-CREATE TABLE `orderer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `blocknum` int(11) DEFAULT NULL,
-  `datahash` varchar(256) DEFAULT NULL,
-  `orderer_config` varchar(128) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='orderer';
-
--- ----------------------------
---  Table structure for `org`
--- ----------------------------
-DROP TABLE IF EXISTS `org`;
-CREATE TABLE `org` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(128) DEFAULT NULL,
-  `mspid` varchar(128) DEFAULT NULL,
-  `adminkey` varchar(256) DEFAULT NULL,
-  `admincert` varchar(256) DEFAULT NULL,
-  `createdt` datetime DEFAULT NULL,
-  `remark` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='org';
-
--- ----------------------------
---  Table structure for `org_ref_channel`
--- ----------------------------
-DROP TABLE IF EXISTS `org_ref_channel`;
-CREATE TABLE `org_ref_channel` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` int(11) DEFAULT NULL,
-  `channelid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='org_ref_channel';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='channel';
 
 -- ----------------------------
 --  Table structure for `peer`
@@ -152,13 +63,13 @@ CREATE TABLE `org_ref_channel` (
 DROP TABLE IF EXISTS `peer`;
 CREATE TABLE `peer` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `mspid` varchar(128) DEFAULT NULL,
+  `org` int(11) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL,
+  `mspid` varchar(64) DEFAULT NULL,
   `requests` varchar(64) DEFAULT NULL,
   `events` varchar(64) DEFAULT NULL,
-  `peer_config` varchar(128) DEFAULT NULL,
+  `server_hostname` varchar(64) DEFAULT NULL,
   `createdt` datetime DEFAULT NULL,
-  `remark` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='peer';
 
@@ -168,10 +79,10 @@ CREATE TABLE `peer` (
 DROP TABLE IF EXISTS `peer_ref_channel`;
 CREATE TABLE `peer_ref_channel` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `peer_name` varchar(64) DEFAULT NULL,
-  `channelname` varchar(64) DEFAULT NULL,
+  `peerid` int(11) DEFAULT NULL,
+  `channelid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='peer_ref_channel';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='';
 
 -- ----------------------------
 --  Table structure for `transaction`
@@ -179,16 +90,13 @@ CREATE TABLE `peer_ref_channel` (
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelname` varchar(128) DEFAULT NULL,
-  `blocknum` varchar(128) DEFAULT NULL,
-  `blockhash` varchar(128) DEFAULT NULL,
+  `channelname` varchar(64) DEFAULT NULL,
+  `blockid` int(11) DEFAULT NULL,
   `txhash` varchar(256) DEFAULT NULL,
-  `txcreatedt` datetime DEFAULT NULL,
-  `chaincodename` varchar(255) DEFAULT NULL,
   `createdt` datetime DEFAULT NULL,
-  `remark` text,
+  `chaincodename` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='transactions';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='transtaion';
 
 -- ----------------------------
 --  Table structure for `write_lock`
@@ -197,6 +105,6 @@ DROP TABLE IF EXISTS `write_lock`;
 CREATE TABLE `write_lock` (
   `write_lock` int(1) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`write_lock`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='write_lock';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -22,8 +22,8 @@ function init(http){
 }
 
 
-module.exports.init=init
+module.exports=exports=init
 
-module.exports.stomp=function () {
+exports.stomp=function () {
     return stompServer
 }

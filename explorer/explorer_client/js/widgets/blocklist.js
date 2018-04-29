@@ -24,6 +24,7 @@ module.exports = function(id) {
 
 
         setData: function(data) {
+            this.data = data;
             this.lastBlockNum = data;
         },
 
@@ -44,11 +45,11 @@ module.exports = function(id) {
 
         BLOCKS_TO_SHOW: 100,
         fetch: function() {
-            // try {
-            //     if (this.lastBlockNum != Tower.status.latestBlock) {
-            //         this.lastBlockNum = Tower.status.latestBlock;
-            //     }
-            // } catch (e) {}
+            try {
+                if (this.lastBlockNum != Tower.status.latestBlock) {
+                    this.lastBlockNum = Tower.status.latestBlock;
+                }
+            } catch (e) {}
 
             var displayLimit, promizes = [], rows = [], _this = this;
 
@@ -64,7 +65,6 @@ module.exports = function(id) {
                         utils.load({
                             url: _this.url,
                             data: { number: _this.lastBlockNum - n },
-                            timeout:3000,
                             complete: function(res) {
                                 rows.push( {
                                     num: res.responseJSON.number,

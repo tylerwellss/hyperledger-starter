@@ -20,23 +20,8 @@ var helper=require('../app/helper.js')
 var co=require('co')
 var stomp=require('../socket/websocketserver.js').stomp()
 var logger = helper.getLogger('blockscanner');
-var EventEmitter = require('events').EventEmitter;
-var blockScanEvent = new EventEmitter();
 
-var blockListener=require('../listener/blocklistener.js').blockListener();
-
-
-blockScanEvent.on('syncBlock',function (channelName) {
-    setTimeout(function () {
-        syncBlock(channelName)
-    },1000)
-})
-
-blockScanEvent.on('syncChaincodes',function (channelName) {
-    setTimeout(function () {
-        syncChaincodes(channelName)
-    },1000)
-})
+var blockListener
 
 
 function  syncBlock(channelName) {
@@ -49,7 +34,7 @@ function  syncBlock(channelName) {
         maxBlockNum=parseInt(datas[0])
         curBlockNum=parseInt(datas[1])+1
         co(saveBlockRange,channelName,curBlockNum,maxBlockNum).then(()=>{
-            blockScanEvent.emit('syncBlock', channelName)
+            blockListener.emit('syncBlock', channelName)
         }).catch(err=>{
             logger.error(err)
         })
@@ -98,8 +83,7 @@ function* saveBlockRange(channelName,start,end){
         }
 
     }
-    // stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:0}))
-    blockListener.emit('txIdle')
+    stomp.send('/topic/metrics/txnPerSec',{},JSON.stringify({timestamp:new Date().getTime()/1000,value:0}))
 }
 
 
@@ -150,7 +134,7 @@ function* saveChaincodes(channelName){
 
 function syncChaincodes(channelName){
     co(saveChaincodes,channelName).then(()=>{
-        blockScanEvent.emit('syncChaincodes', channelName)
+        blockListener.emit('syncChaincodes', channelName)
     }).catch(err=>{
         logger.error(err)
     })
@@ -160,9 +144,7 @@ function syncChaincodes(channelName){
 
 exports.syncBlock=syncBlock
 exports.syncChaincodes=syncChaincodes
-exports.blockScanEvent=blockScanEvent;
 
-/*
 exports.setBlockListener=function(blisten){
     blockListener=blisten
-}*/
+}
