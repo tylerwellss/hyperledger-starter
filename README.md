@@ -12,15 +12,13 @@ Welcome to a repo to get started with a combination of Hyperledger Fabric 1.1, H
 * Go
 * Python
 
-Fabric binaries are located in the bin directory. To use fabric binaries, set your path after cloning the repo.
+You might need to set some paths.
 
 ```bash
+# Set path to Fabric binaries
 export PATH=<path-to>/bin:$PATH
-```
 
-You may also need to set your Go path.
-
-```bash
+# Set path to Go
 export PATH=$PATH:$GOPATH/bin
 ```
 
@@ -30,10 +28,13 @@ export PATH=$PATH:$GOPATH/bin
 
 This assumes you've installed the Fabric prerequisites.
 
-* Install Essential CLI Tools
-  * `npm install -g composer-cli`
-* Install utility to generate Composer's REST server
-  * `npm install -g composer-rest-server`
+```bash
+# Install Essential CLI Tools
+npm install -g composer-cli
+
+# Install utility to generate Composer's REST server
+npm install -g composer-rest-server
+```
 
 ## Hyperledger Blockchain Explorer Prerequisites
 
